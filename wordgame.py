@@ -1,5 +1,12 @@
 from lib2to3.pytree import LeafPattern
+from random import random
 
+f = open(r"words_alpha.txt")
+word_list = f.readlines()
+f.close()
+print(word_list[99])
+
+print(random())
 
 def all_alpha(word):
     word = word.lower()
