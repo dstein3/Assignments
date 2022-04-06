@@ -34,6 +34,7 @@ def replace_clouded_letter(letter,answer,cloud):
         cloud[index_list[pos]] = letter
         cloud = ''.join(cloud)
         index_list_length = index_list_length - 1
+        pos = pos + 1
     return cloud
 
 
@@ -55,25 +56,34 @@ def word_game(answer):
     answer = answer.lower()
     guesses_remaining = 7
     stored_guesses = []
+    guess_dict = {}
     while guesses_remaining > 0:
         input_prompt = 'Guess either a letter, or the final word. Your word so far is ' + word_clouded + '. You have ' + str(guesses_remaining) + ' guesses remaining. Good luck! Guess: '
         player_input = str(input(input_prompt))
         player_input = player_input.lower()
         if not all_alpha(player_input):
             print('guesses must only use letters')
+        elif player_input in guess_dict.values():
+            print("You've already guessed \"" + player_input + "\". Try something else.")
         elif len(player_input) == 1:
             word_clouded2 = replace_clouded_letter(player_input,answer,word_clouded)
             if word_clouded2 != word_clouded:
                 word_clouded = word_clouded2
+                guess_dict[str(len(guess_dict)+1)] = player_input
+                print(guess_dict.values())
                 #continue
             elif word_clouded2 == word_clouded:
                 guesses_remaining = guesses_remaining - 1
+                guess_dict[str(len(guess_dict)+1)] = player_input
+                print(guess_dict.values())
         elif len(player_input) > 1:
             if player_input == answer:
                 print("You win, Congradulations! The word was \"" + answer + "\"!")
                 break
             elif player_input != answer:
-               guesses_remaining = guesses_remaining - 1 
+                guess_dict[str(len(guess_dict)+1)] = player_input
+                guesses_remaining = guesses_remaining - 1
+                print(guess_dict.values())
     print('Game Over')
 
 #word_clouded = '----'
@@ -84,9 +94,6 @@ def word_game(answer):
 
 #make a function that returns a boolean for if an answer contains non-letter
 
-
-word_game('hero')
-
 #print(replace_clouded_letter('lulz','house','-----'))
 
 #leaf = 'maple'
@@ -95,3 +102,9 @@ word_game('hero')
 #leaf = ''.join(leaf)
 #print(leaf)
 
+#word_game('yellow')
+print(replace_clouded_letter('g',"eggg",'elll'))
+print(indexall('g','egg'))
+print(len(['2']))
+
+word_game('little')
